@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    Tabla
+                </div>
+                <div class="card-body">
+                    <table id="tbl-usuarios" class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Password</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let user of this.listaUsuarios">
+                            <td>{{user.name}}</td>
+                            <td>{{user.password}}</td>
+                            <td>
+                                <a href="#" (click)="deleteUsuario(user._id, user.name);">Eliminar</a>
+                                <a href="#" data-toggle="modal" data-target="#myModal"
+                                   (click)="openModalUpdate(user._id, user.name,user.password);">Editar</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="card-header">
+                        Registro
+                    </div>
+                    <div class="card-body">
+                        <div class="form-content text-right">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-success"
+                                         *ngIf="this.alertaRegistro != null && this.alertaRegistroError == null">
+                                        {{this.alertaRegistro}}
+                                    </div>
+                                    <div class="alert alert-warning"
+                                         *ngIf="this.alertaRegistro == null && this.alertaRegistroError != null">
+                                        {{this.alertaRegistroError}}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="name" #name="ngModel"
+                                               [(ngModel)]="usuarios.name"
+                                               placeholder="Usuario" value=""/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="password" #password="ngModel"
+                                               [(ngModel)]="usuarios.password"
+                                               placeholder="Contraseña" value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <input type="submit" value="Registrar" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <form #updateForm="ngForm" (ngSubmit)="onUpdate()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">cd
+                    <h4 class="modal-title">Modificar usuario: {{usuarios.name}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-content text-right">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" readonly name="id" #id="ngModel" [(ngModel)]="this.id_update">
+                                <div class="form-group">
+                                    <input type="text" readonly class="form-control" name="name" #name="ngModel"
+                                           [(ngModel)]="usuarios.name"
+                                           placeholder="Usuario" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="password" #password="ngModel"
+                                           [(ngModel)]="usuarios.password"
+                                           placeholder="Contraseña" value=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6 text-left">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <input type="submit" data-toggle="modal" data-target="#myModal" value="Modificar"
+                                       class="btn btn-success">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
